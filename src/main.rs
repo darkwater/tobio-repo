@@ -13,16 +13,18 @@ enum VideoEntry {
 }
 
 impl VideoEntry {
-    pub fn to_json(&self) -> serde_json::Value {
+    pub fn to_json(&self, key: &str) -> serde_json::Value {
         match self {
             VideoEntry::Folder(c) => json!({
-                "folderType": c.folder_type,
+                "key":        key,
                 "label":      c.label,
+                "folderType": c.folder_type,
                 "numEntries": c.entries.len(),
             }),
             VideoEntry::File(e) => json!({
-                "fileType": e.file_type,
+                "key":      key,
                 "label":    e.label,
+                "fileType": e.file_type,
                 "url":      e.url,
             }),
         }
@@ -123,8 +125,8 @@ fn video_browse(video: PathBuf, store: State<Store>) -> Option<String> {
         json!({
             "crumbs": crumbs,
             "entries": folder.iter().map(|(k, v)| {
-                (k, v.to_json())
-            }).collect::<HashMap<_, _>>(),
+                v.to_json(k)
+            }).collect::<Vec<_>>(),
         })
         .to_string()
     )
