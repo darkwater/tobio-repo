@@ -1,0 +1,4 @@
+# diesel sucks
+
+[build]
+rustflags = [ "-Aproc-macro-derive-resolution-fallback" ]
