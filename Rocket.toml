@@ -1,5 +1,6 @@
 [development]
-port=5958
+address = "172.24.0.3"
+port = 5958
 
 [global.databases]
 store = { url = "./dev.db" }
